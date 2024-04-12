@@ -3,6 +3,11 @@ import UserApi from '../API/UserApi'
 import { useParams,useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
+import { useDispatch } from 'react-redux'
+import { updateUser } from '../Actions/UserAction'
+
+// update user
+
 function Update() {
     const [user,setUser] = useState({
         name: "",
@@ -11,6 +16,7 @@ function Update() {
     })
     const navigate = useNavigate()
     const params = useParams()
+    const dispatch = useDispatch()   // action dispatch
 
     // read single user data
     const readData = async () => {
@@ -34,13 +40,12 @@ function Update() {
         e.preventDefault()
         try {
             console.log(`new user =`, user)
-            await UserApi.updateUser(user,params.id)
+            await dispatch(updateUser({user,id:params.id}))
+                .unwrap()
                 .then(res => {
-                    toast.success(res.data.msg)
+                    toast.success(res.msg)
                     navigate(`/`)
-                }).catch(err => {
-                    toast.error(err.response.data.msg)
-                })
+                }).catch(err => toast.error(err.msg))
         } catch (err) {
             toast.error(err.message)
         }

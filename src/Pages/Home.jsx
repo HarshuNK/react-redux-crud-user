@@ -59,7 +59,7 @@ const deleteHandler = async (id) => {
       <div className="row mt-4">
         <div className="col-md-12 text-center">
           <div className="table table-responsive">
-            <table className="table-bordered table-striped table-hovered">
+            <table className="table table-bordered table-striped table-hovered">
               <thead>
                 <tr>
                   <th colSpan={6}>
